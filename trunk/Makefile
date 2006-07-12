@@ -15,7 +15,7 @@ openfm.pot: $(SOURCES)
 		--output-dir=po \
 		--keyword=_ --keyword=PRINTLN --keyword=PRINTLN1 \
 		--keyword=PRINTLN2 --keyword=PRINTLN3 \
-		--language=C \
+		--language=C --no-location \
 		--msgid-bugs-address="Slava Semushin <php-coder at altlinux.ru>" \
 		--files-from=-
 

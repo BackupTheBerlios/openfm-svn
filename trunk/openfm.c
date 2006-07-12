@@ -322,7 +322,7 @@ analyze_arguments(char **argv, int start, char **dbfile, unsigned int verbose, s
           *dbfile = strdup(argv[start]);
           if (*dbfile == NULL ) {
               fprintf(stderr, "strdup: %s\n%s\n",
-                      _("Cannot allocate memory"),
+                      _("cannot allocate memory"),
                       _("Using default data file..."));
           }
       }
