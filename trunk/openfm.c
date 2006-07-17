@@ -9,7 +9,7 @@
  * @file openfm.c contains main() function and related functions
  * @author Slava Semushin <php-coder at altlinux.ru>
  * @since 23.04.2006
- * @date  10.07.2006
+ * @date  16.07.2006
  **/
 
 /* for getpwuid()
@@ -93,8 +93,10 @@ typedef enum {COST, PROFIT, CATEGORY, BALANCE, FULLSTAT} arguments;
  * analyze_arguments() function.
  **/
 typedef struct {
-  actions   act; /**< see description for \ref actions */
-  arguments arg; /**< see description for \ref arguments */
+  actions      act;     /**< see description for \ref actions */
+  arguments    arg;     /**< see description for \ref arguments */
+  char        *dbfile;  /**< full path to data file */
+  unsigned int verbose; /**< level of verbose */
 } settings_t;
 
 
@@ -102,9 +104,9 @@ typedef struct {
 static void print_help(const char *progname);
 static void print_version(const char *progname);
 static  int parse_cmd_line(int argc, char **argv, unsigned int *verbose);
-static void analyze_arguments(char **argv, int start, char **dbfile, unsigned int verbose, settings_t *ofm);
+static void analyze_arguments(char **argv, int start, settings_t *ofm);
 static char *get_path_to_datafile(unsigned int verbose);
-static void read_and_parse_datafile(char *dbfile, unsigned int verbose);
+static void read_and_parse_datafile(const settings_t *ofm);
 static void turn_on_localization(void);
 
 
@@ -123,46 +125,41 @@ static void turn_on_localization(void);
 int
 main(int argc, char **argv)
 {
-
- /* for storage path to data file */
- char *dbfile = NULL;
-
- /* level of verbose. Turn off by default */
- unsigned int verbose = 0;
-
  /* temporary variable. Used only as routine between parse_cmd_line()
   * and analyze_arguments()
   **/
  int opt_num;
 
+
  /* program settings which will get from command line */
  settings_t ofm;
 
+ ofm.act     = NONE; /* no actions should be perform by default */
+ ofm.verbose = 0;    /* no verbose by default */
+ ofm.dbfile  = NULL;
 
- /* no actions should be perform by default */
- ofm.act = NONE;
 
  /* enable localizaion */
  turn_on_localization();
 
  /* look at command line options */
- opt_num = parse_cmd_line(argc, argv, &verbose);
+ opt_num = parse_cmd_line(argc, argv, &ofm.verbose);
 
  /* parse another arguments if they exists */
  if (opt_num < argc) {
-     analyze_arguments(argv, opt_num, &dbfile, verbose, &ofm);
+     analyze_arguments(argv, opt_num, &ofm);
  }
 
  /* if user does not give data file */
- if (dbfile == NULL) {
-     dbfile = get_path_to_datafile(verbose);
+ if (ofm.dbfile == NULL) {
+     ofm.dbfile = get_path_to_datafile(ofm.verbose);
  }
 
 
  switch (ofm.act) {
      case NONE:
          /* read datafile, parse him and print statistics */
-         read_and_parse_datafile(dbfile, verbose);
+         read_and_parse_datafile(&ofm);
          break;
      /**
       * @todo
@@ -297,12 +294,10 @@ parse_cmd_line(int argc, char **argv, unsigned int *verbose)
  *
  * @param argv list of arguments of program
  * @param start number of first non-option element in argv
- * @param dbfile variable contains full path to data file
- * @param verbose level of verbose
  * @param ofm struct with program settings
  **/
 static void
-analyze_arguments(char **argv, int start, char **dbfile, unsigned int verbose, settings_t *ofm)
+analyze_arguments(char **argv, int start, settings_t *ofm)
 {
 
   /* if action "add" was chosen */
@@ -316,11 +311,11 @@ analyze_arguments(char **argv, int start, char **dbfile, unsigned int verbose, s
   /* if unknown action then interpret this as data file */
   } else {
       /* we not set ofm->act to NONE bacause it is done in main() */
-      if (is_file_exist_and_regular(argv[start], verbose)) {
+      if (is_file_exist_and_regular(argv[start], ofm->verbose)) {
           fprintf(stderr, "%s\n", _("Using default data file..."));
       } else {
-          *dbfile = strdup(argv[start]);
-          if (*dbfile == NULL ) {
+          ofm->dbfile = strdup(argv[start]);
+          if (ofm->dbfile == NULL) {
               fprintf(stderr, "strdup: %s\n%s\n",
                       _("cannot allocate memory"),
                       _("Using default data file..."));
@@ -477,11 +472,10 @@ get_path_to_datafile(unsigned int verbose)
  * would be checked with \ref is_string_confirm_to_format() function.
  * As result will prints short statistics about user's money.
  *
- * @param dbfile variable contains full path to data file
- * @param verbose level of verbose
+ * @param ofm struct with program settings
  **/
 static void
-read_and_parse_datafile(char *dbfile, unsigned int verbose)
+read_and_parse_datafile(const settings_t *ofm)
 {
   FILE *fp;
   int   ret; /* for storage fclose() return value */
@@ -501,21 +495,21 @@ read_and_parse_datafile(char *dbfile, unsigned int verbose)
   /* counter for wrong lines in file */
   int fails;
 
-  if (verbose >= 1)
-      printf(_("-> Open data file (%s)\n"), dbfile);
+  if (ofm->verbose >= 1)
+      printf(_("-> Open data file (%s)\n"), ofm->dbfile);
 
   /* open data file */
-  fp = fopen(dbfile, "r");
+  fp = fopen(ofm->dbfile, "r");
   if (fp == NULL) {
-      fprintf(stderr, _("Failed to open file: %s\n"), dbfile);
+      fprintf(stderr, _("Failed to open file: %s\n"), ofm->dbfile);
       perror("fopen");
       exit(EXIT_FAILURE);
   }
 
   /* free memory for path to data file */
-  free(dbfile);
+  free(ofm->dbfile);
 
-  if (verbose >= 1)
+  if (ofm->verbose >= 1)
       printf(_("-> Reading data...\n"));
 
   curline = calloc(LINE_MAX + 1, sizeof(char));
@@ -543,7 +537,7 @@ read_and_parse_datafile(char *dbfile, unsigned int verbose)
         continue;
     }
 
-    if (verbose >= 3) {
+    if (ofm->verbose >= 3) {
         /* FIXME:
          * Just think what will happen if one symbol is now in buffer
          * */
@@ -584,7 +578,7 @@ read_and_parse_datafile(char *dbfile, unsigned int verbose)
    * @todo
    * - Deal with plural forms. Use ngettext()
    **/
-  if (verbose >= 1) {
+  if (ofm->verbose >= 1) {
       printf(_("-> Reads %lu strings"), lineno);
       if (lineno > record_count)
           printf(_(" and %lu records"), record_count);
