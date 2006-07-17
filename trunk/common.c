@@ -9,7 +9,7 @@
  * @file common.c contains common functions
  * @author Slava Semushin <php-coder at altlinux.ru>
  * @since 25.06.2006
- * @date  10.07.2006
+ * @date  17.07.2006
  **/
 
 /* for stat()
@@ -258,7 +258,7 @@ add_record_to_file(const char *filename, const char *record, unsigned int verbos
   }
 
   if (verbose >= 2) {
-      printf("%s\n", _("--> Lock file"));
+      printf("--> %s\n", _("Lock file"));
   }
 
   lock.l_type   = F_WRLCK;  /* lock for write */
@@ -274,7 +274,7 @@ add_record_to_file(const char *filename, const char *record, unsigned int verbos
   }
 
   if (verbose >= 2) {
-      printf("%s\n", _("--> Writing data"));
+      printf("--> %s\n", _("Writing data"));
   }
 
   /* write data */
@@ -285,7 +285,7 @@ add_record_to_file(const char *filename, const char *record, unsigned int verbos
   }
 
   if (verbose >= 2) {
-      printf("%s\n", _("--> Unlock file"));
+      printf("--> %s\n", _("Unlock file"));
   }
 
   /* reset lock */
@@ -298,7 +298,7 @@ add_record_to_file(const char *filename, const char *record, unsigned int verbos
   }
 
   if (verbose >= 2) {
-      printf("%s\n", _("--> Flushing data to disk"));
+      printf("--> %s\n", _("Flushing data to disk"));
   }
 
   /* flush data */
@@ -308,7 +308,7 @@ add_record_to_file(const char *filename, const char *record, unsigned int verbos
   }
 
   if (verbose >= 2) {
-      printf("%s\n", _("--> Close file"));
+      printf("--> %s\n", _("Close file"));
   }
 
   /* close file */

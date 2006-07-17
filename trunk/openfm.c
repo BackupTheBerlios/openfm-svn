@@ -9,7 +9,7 @@
  * @file openfm.c contains main() function and related functions
  * @author Slava Semushin <php-coder at altlinux.ru>
  * @since 23.04.2006
- * @date  16.07.2006
+ * @date  17.07.2006
  **/
 
 /* for getpwuid()
@@ -268,7 +268,7 @@ parse_cmd_line(int argc, char **argv, unsigned int *verbose)
   }
 
   if (*verbose >= 1)
-      printf(_("-> NOTE: Set verbose level to %u\n"), *verbose);
+      printf("-> %s %u\n", _("NOTE: Set verbose level to"), *verbose);
 
 
  return optind;
@@ -439,7 +439,8 @@ get_path_to_datafile(unsigned int verbose)
   }
 
   if (verbose >= 1)
-      printf(_("-> Your home directory is '%s'\n"), homedir);
+      printf("-> %s '%s'\n", _("Your home directory is"), homedir);
+
 
   /* Allocate memory for path to file with data:
    * strlen("/home/coder" + "/" + "finance.db" + "\0")
@@ -510,12 +511,12 @@ read_and_parse_datafile(const settings_t *ofm)
   int fails;
 
   if (ofm->verbose >= 1)
-      printf(_("-> Open data file (%s)\n"), ofm->dbfile);
+      printf("-> %s (%s)\n", _("Open data file"), ofm->dbfile);
 
   /* open data file */
   fp = fopen(ofm->dbfile, "r");
   if (fp == NULL) {
-      fprintf(stderr, _("Failed to open file: %s\n"), ofm->dbfile);
+      fprintf(stderr, "%s: %s\n", _("Failed to open file"), ofm->dbfile);
       perror("fopen");
       exit(EXIT_FAILURE);
   }
@@ -524,7 +525,7 @@ read_and_parse_datafile(const settings_t *ofm)
   free(ofm->dbfile);
 
   if (ofm->verbose >= 1)
-      printf(_("-> Reading data...\n"));
+      printf("-> %s\n", _("Reading data..."));
 
   curline = calloc(LINE_MAX + 1, sizeof(char));
   if (curline == NULL) {

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenFM 0.5\n"
 "Report-Msgid-Bugs-To: Slava Semushin <php-coder at altlinux.ru>\n"
-"POT-Creation-Date: 2006-07-12 12:06+0700\n"
-"PO-Revision-Date: 2006-07-08 12:06+0700\n"
+"POT-Creation-Date: 2006-07-17 11:22+0700\n"
+"PO-Revision-Date: 2006-07-17 11:22+0700\n"
 "Last-Translator: Slava Semushin <php-coder at altlinux.ru\n"
 "Language-Team: OpenFM Translation Team <php-coder at altlinux.ru>\n"
 "MIME-Version: 1.0\n"
@@ -59,30 +59,26 @@ msgstr "-> Получение информации для файла %s\n"
 msgid "File %s isn't regular file!\n"
 msgstr "Файл %s не является обычным файлом!\n"
 
-#, c-format
-msgid "-> Open data file (%s)\n"
-msgstr "-> Открываю файл с данными (%s)\n"
-
-msgid "--> Lock file"
-msgstr ""
+msgid "Lock file"
+msgstr "Блокирую файл"
 
 msgid "cannot lock file for writing"
-msgstr ""
+msgstr "не удалось заблокировать файл для записи"
 
-msgid "--> Writing data"
-msgstr ""
+msgid "Writing data"
+msgstr "Записываю данные"
 
-msgid "--> Unlock file"
-msgstr ""
+msgid "Unlock file"
+msgstr "Разблокирование файла"
 
 msgid "cannot unlock file"
-msgstr ""
+msgstr "не удалось разблокировать файл"
 
-msgid "--> Flushing data to disk"
-msgstr ""
+msgid "Flushing data to disk"
+msgstr "Сбрасываю данные на диск"
 
-msgid "--> Close file"
-msgstr ""
+msgid "Close file"
+msgstr "Закрываю файл"
 
 #, c-format
 msgid ""
@@ -106,15 +102,17 @@ msgstr "версия"
 msgid "return"
 msgstr "вернула"
 
-#, c-format
-msgid "-> NOTE: Set verbose level to %u\n"
-msgstr "-> Внимание: Уровень режима детализации действий установлен в %u\n"
+msgid "NOTE: Set verbose level to"
+msgstr "Внимание: Уровень режима детализации действий установлен в"
 
 msgid "Using default data file..."
 msgstr "Используется файл с данными по умолчанию..."
 
 msgid "cannot allocate memory"
 msgstr "не удалось выделить память"
+
+msgid "Not enough arguments for action"
+msgstr "Недостаточно аргументов для действия"
 
 msgid "Wrong argument for action"
 msgstr "Неверный аргумент для действия"
@@ -125,9 +123,8 @@ msgstr "не удалось получить значение переменно
 msgid "cannot find user with uid"
 msgstr "не удалось найти пользователя с идентификатором"
 
-#, c-format
-msgid "-> Your home directory is '%s'\n"
-msgstr "-> Ваш домашний каталог '%s'\n"
+msgid "Your home directory is"
+msgstr "Ваш домашний каталог"
 
 #, c-format
 msgid ""
@@ -141,13 +138,14 @@ msgstr ""
 msgid "Failed to write to the character string\n"
 msgstr "Не удалось записать в символьную строку\n"
 
-#, c-format
-msgid "Failed to open file: %s\n"
-msgstr "Ошибка при открытии файла: %s\n"
+msgid "Open data file"
+msgstr "Открываю файл с данными"
 
-#, c-format
-msgid "-> Reading data...\n"
-msgstr "-> Чтение данных...\n"
+msgid "Failed to open file"
+msgstr "Ошибка при открытии файла"
+
+msgid "Reading data..."
+msgstr "Чтение данных..."
 
 #, c-format
 msgid "Too many wrong lines in database. Exit.\n"
