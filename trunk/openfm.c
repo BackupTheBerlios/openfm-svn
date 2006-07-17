@@ -104,7 +104,7 @@ typedef struct {
 static void print_help(const char *progname);
 static void print_version(const char *progname);
 static  int parse_cmd_line(int argc, char **argv, unsigned int *verbose);
-static void analyze_arguments(char **argv, int start, settings_t *ofm);
+static void analyze_arguments(int argc, char **argv, int start, settings_t *ofm);
 static char *get_path_to_datafile(unsigned int verbose);
 static void read_and_parse_datafile(const settings_t *ofm);
 static void turn_on_localization(void);
@@ -147,7 +147,7 @@ main(int argc, char **argv)
 
  /* parse another arguments if they exists */
  if (opt_num < argc) {
-     analyze_arguments(argv, opt_num, &ofm);
+     analyze_arguments(argc, argv, opt_num, &ofm);
  }
 
  /* if user does not give data file */
@@ -292,14 +292,14 @@ parse_cmd_line(int argc, char **argv, unsigned int *verbose)
  * @warning If dbfile was change (not NULL after) then don't forget to free
  * memory with free() function.
  *
+ * @param argc program arguments counter
  * @param argv list of arguments of program
  * @param start number of first non-option element in argv
  * @param ofm struct with program settings
  **/
 static void
-analyze_arguments(char **argv, int start, settings_t *ofm)
+analyze_arguments(int argc, char **argv, int start, settings_t *ofm)
 {
-
   /* if action "add" was chosen */
   if (strcmp(argv[start], "add") == 0) {
       ofm->act = ADD;
@@ -322,6 +322,13 @@ analyze_arguments(char **argv, int start, settings_t *ofm)
           }
       }
       return;
+  }
+
+  if (argc - start == 1) {
+      fprintf(stderr, "%s \"%s\"\n",
+              _("Not enough arguments for action"),
+              (ofm->act == ADD) ? "add" : "show");
+      exit(EXIT_FAILURE);
   }
 
   start++; /* forward to next argument */
@@ -377,6 +384,13 @@ analyze_arguments(char **argv, int start, settings_t *ofm)
       } /* end for action "show" */
 
   } /* for actions */
+
+
+  /* when program was called as "openfm add (cost|profit|category)" */
+  if (ofm->act == ADD && argc - start == 1) {
+      fprintf(stderr, "%s \"add\"\n", _("Not enough arguments for action"));
+      exit(EXIT_FAILURE);
+  }
 
 }
 
