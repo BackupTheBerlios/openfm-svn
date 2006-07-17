@@ -247,7 +247,7 @@ add_record_to_file(const char *filename, const char *record, unsigned int verbos
   struct flock lock; /* need for fcntl() function */
 
   if (verbose >= 1) {
-      printf(_("-> Open data file (%s)\n"), filename);
+      printf("-> %s (%s)\n", _("Open data file"), filename);
   }
 
   /* open file for append data */
