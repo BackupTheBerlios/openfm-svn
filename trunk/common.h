@@ -22,10 +22,9 @@
  **/
 
 /**
- * @file common.h contains prototypes for common functions
+ * @file   common.h contains prototypes for common functions
  * @author Slava Semushin <php-coder at altlinux.ru>
- * @since 25.06.2006
- * @date  10.07.2006
+ * @since  25.06.2006
  **/
 
 #ifndef COMMON_H

@@ -22,10 +22,9 @@
  **/
 
 /**
- * @file openfm.c contains main() function and related functions
+ * @file   openfm.c contains main() function and related functions
  * @author Slava Semushin <php-coder at altlinux.ru>
- * @since 23.04.2006
- * @date  17.07.2006
+ * @since  23.04.2006
  **/
 
 /* for getpwuid()

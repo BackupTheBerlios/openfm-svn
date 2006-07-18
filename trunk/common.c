@@ -22,10 +22,9 @@
  **/
 
 /**
- * @file common.c contains common functions
+ * @file   common.c contains common functions
  * @author Slava Semushin <php-coder at altlinux.ru>
- * @since 25.06.2006
- * @date  17.07.2006
+ * @since  25.06.2006
  **/
 
 /* for stat()
