@@ -174,7 +174,11 @@ is_string_confirm_to_format(const char *str, unsigned long lineno)
   }
 
   /* check year */
-  year = (str[8] - '0') * 1000 + (str[9] - '0') * 100 + (str[10] - '0') * 10 + (str[11] - '0');
+  year = (str[8]  - '0') * 1000 +
+         (str[9]  - '0') * 100  +
+         (str[10] - '0') * 10   +
+         (str[11] - '0');
+
   if (year == 0) {
       PRINTLN("Invalid number of year! Year should be more then 0");
       return 8;
