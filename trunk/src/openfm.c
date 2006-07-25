@@ -83,10 +83,8 @@
 
 /* local file */
 #include "common.h"
+#include "config.h"
 
-
-/** Version of the program */
-#define VERSION "0.5"
 
 /** Name of data file */
 #define DATA_FILE "finance.db"
