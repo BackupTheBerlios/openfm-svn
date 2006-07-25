@@ -1,0 +1,6 @@
+AC_INIT(src/openfm.c)
+AM_INIT_AUTOMAKE(openfm,0.5)
+AC_CONFIG_HEADERS
+AC_PROG_CC
+AC_PROG_MAKE_SET
+AC_OUTPUT(Makefile src/Makefile)
