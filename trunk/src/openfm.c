@@ -429,11 +429,11 @@ get_path_to_datafile(unsigned int verbose)
   char  *homedir;       /* path to home directory */
   char  *dbfile;        /* result path */
   size_t filename_size; /* size of result path */
-  int    ret;           /* for storage snprintf() value */
+  int    ret;           /* for storage snprintf() return value */
 
   /* both variables uses only when getenv() fails */
   struct passwd *user;  /* for storage getpwuid() return value */
-  uid_t user_id;        /* for storage getuid() reurn value */
+  uid_t user_id;        /* for storage getuid() return value */
 
   homedir = getenv("HOME");
   if (homedir == NULL) {
