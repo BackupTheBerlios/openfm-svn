@@ -64,6 +64,7 @@
 
 /* for strlen()
  *     strdup()
+ *     strchr()
  **/
 #include <string.h>
 
@@ -514,6 +515,9 @@ read_and_parse_datafile(const settings_t *ofm)
   /* current line from file */
   char *curline;
 
+  /* for storage strchr() return value */
+  char *pos;
+
   /* counter for lines in file */
   unsigned long lineno;
 
@@ -565,11 +569,13 @@ read_and_parse_datafile(const settings_t *ofm)
         continue;
     }
 
+    /* kill trailing newline */
+    pos = strchr(curline, '\n');
+    if (pos != NULL) {
+        *pos = '\0';
+    }
+
     if (ofm->verbose >= 3) {
-        /* FIXME:
-         * Just think what will happen if one symbol is now in buffer
-         * */
-        curline[strlen(curline) - 1] = '\0';
         printf("---> %lu: '%s'\n", lineno, curline);
     }
 
@@ -589,7 +595,7 @@ read_and_parse_datafile(const settings_t *ofm)
      * @todo
      * - correctly handle return value from sscanf()
      **/
-    (void)sscanf(curline, "%c|%*2u.%*2u.%*4u|%f|%*s\n", &sign, &curr);
+    (void)sscanf(curline, "%c|%*2u.%*2u.%*4u|%f|%*s", &sign, &curr);
 
     if (sign == '-') {
         minus += curr;
