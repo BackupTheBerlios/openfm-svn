@@ -1,6 +1,8 @@
-AC_INIT(src/openfm.c)
-AM_INIT_AUTOMAKE(openfm,0.5)
+AC_INIT([openfm],[0.5],[php-coder at altlinux.ru])
+AC_CONFIG_SRCDIR(src/openfm.c)
+AM_INIT_AUTOMAKE([dist-bzip2 no-dist-gzip])
 AC_CONFIG_HEADERS(config.h)
 AC_PROG_CC
 AC_PROG_MAKE_SET
-AC_OUTPUT(Makefile src/Makefile)
+AC_CONFIG_FILES([Makefile src/Makefile])
+AC_OUTPUT
