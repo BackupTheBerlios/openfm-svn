@@ -595,7 +595,7 @@ read_and_parse_datafile(const settings_t *ofm)
      * @todo
      * - correctly handle return value from sscanf()
      **/
-    (void)sscanf(curline, "%c|%*2u.%*2u.%*4u|%f|%*s", &sign, &curr);
+    (void)sscanf(curline, "%c|%*2u.%*2u.%*4u|%*u|%f|%*s", &sign, &curr);
 
     if (sign == '-') {
         minus += curr;

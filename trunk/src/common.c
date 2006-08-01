@@ -113,13 +113,14 @@
  * Functions do 11 tests under giving string. Right string looks like
  * this
  *
- * \c "sign|dd.mm.yyyy|amount|comment"
+ * \c "sign|dd.mm.yyyy|category|amount|comment"
  *
  * and consist of four fields:
  *
  * -# sign -- should be '+' or '-' only. It is says to program: costs
  *    or profit.
  * -# date in format \c "dd.mm.yyyy"
+ * -# category should be in numerical format
  * -# amount of profit/costs (depends on first field)
  * -# comment
  *
@@ -157,7 +158,7 @@ is_string_confirm_to_format(const char *str, unsigned long lineno)
   struct tm *local_time; /* current time in local-time format */
 
   /* check lenght of string */
-  if (strlen(str) < 15) {
+  if (strlen(str) < 18) {
       PRINTLN("String is too small");
       return 1;
   }
