@@ -58,7 +58,9 @@
 /* for exit() */
 #include <stdlib.h>
 
-/* for strlen() */
+/* for strlen()
+ *     strchr()
+ * */
 #include <string.h>
 
 /* for time()
@@ -110,7 +112,7 @@
 /**
  * Test string for confirm to format.
  *
- * Functions do 11 tests under giving string. Right string looks like
+ * Functions do 13 tests under giving string. Right string looks like
  * this
  *
  * \c "sign|dd.mm.yyyy|category|amount|comment"
@@ -139,6 +141,8 @@
  * @retval 9 day of month for leap year is out of range
  * @retval 10 day of month is out of range for that month
  * @retval 11 date in future
+ * @retval 12 3rd separator not found
+ * @retval 13 4th separator not found
  *
  * @return 0 or digit more then 0 if one of test was failed
  **/
@@ -157,6 +161,9 @@ is_string_confirm_to_format(const char *str, unsigned long lineno)
   time_t unix_time;      /* current time in unix format (seconds since 01.01.1970) */
   struct tm *local_time; /* current time in local-time format */
 
+  char *sep_cat;    /* point to separator after 3rd field */
+  char *sep_amount; /* point to separator after 4th field */
+
   /* check lenght of string */
   if (strlen(str) < 18) {
       PRINTLN("String is too small");
@@ -169,15 +176,29 @@ is_string_confirm_to_format(const char *str, unsigned long lineno)
       return 2;
   }
 
-  /**
-   * @todo
-   * - also check another separators
-   **/
   /* check separators for fields */
   if (str[1] != '|' || str[12] != '|') {
       PRINTLN("Separator for fields should be sign '|'!");
       return 3;
   }
+
+  sep_cat = strchr(str+13, '|');
+  if (sep_cat == NULL) {
+      PRINTLN("Separator after 3rd field not found!");
+      return 12;
+  }
+
+  sep_amount = strchr(sep_cat+1, '|');
+  if (sep_amount == NULL) {
+      PRINTLN("Separator after 4th field not found!")
+      return 13;
+  }
+
+  /**
+   * @todo
+   * - check field "category"
+   * - check field "amount"
+   **/
 
   /* check date: should consist of digitals only */
   if (!(isdigit(str[2] ) && isdigit(str[3] ) && /* check day */
