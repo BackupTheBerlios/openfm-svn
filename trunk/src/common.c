@@ -112,7 +112,7 @@
 /**
  * Test string for confirm to format.
  *
- * Functions do 13 tests under giving string. Right string looks like
+ * Functions do 15 tests under giving string. Right string looks like
  * this
  *
  * \c "sign|dd.mm.yyyy|category|amount|comment"
@@ -143,6 +143,8 @@
  * @retval 11 date in future
  * @retval 12 3rd separator not found
  * @retval 13 4th separator not found
+ * @retval 14 4th field contains not number
+ * @retval 15 5th field contains not number
  *
  * @return 0 or digit more then 0 if one of test was failed
  **/
@@ -163,6 +165,7 @@ is_string_confirm_to_format(const char *str, unsigned long lineno)
 
   char *sep_cat;    /* point to separator after 3rd field */
   char *sep_amount; /* point to separator after 4th field */
+  const char *i;
 
   /* check lenght of string */
   if (strlen(str) < 18) {
@@ -184,21 +187,31 @@ is_string_confirm_to_format(const char *str, unsigned long lineno)
 
   sep_cat = strchr(str+13, '|');
   if (sep_cat == NULL) {
-      PRINTLN("Separator after 3rd field not found!");
+      PRINTLN("Separator after third field not found!");
       return 12;
   }
 
   sep_amount = strchr(sep_cat+1, '|');
   if (sep_amount == NULL) {
-      PRINTLN("Separator after 4th field not found!");
+      PRINTLN("Separator after fourth field not found!");
       return 13;
   }
 
-  /**
-   * @todo
-   * - check field "category"
-   * - check field "amount"
-   **/
+  /* check category: should consist of digitals only */
+  for (i = str+13; i < sep_cat; i++) {
+    if (!isdigit(*i)) {
+        PRINTLN("Fourth field should consist of digitals only!");
+        return 14;
+    }
+  }
+
+  /* check amount: should consist of digitals or point/comma only */
+  for (i = sep_cat+1; i < sep_amount; i++) {
+    if ((!isdigit(*i)) && *i != '.' && *i != ',') {
+        PRINTLN("Fifth field should consist of digitals and point or comma only!");
+        return 15;
+    }
+  }
 
   /* check date: should consist of digitals only */
   if (!(isdigit(str[2] ) && isdigit(str[3] ) && /* check day */
