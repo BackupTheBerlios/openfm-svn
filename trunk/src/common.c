@@ -190,7 +190,7 @@ is_string_confirm_to_format(const char *str, unsigned long lineno)
 
   sep_amount = strchr(sep_cat+1, '|');
   if (sep_amount == NULL) {
-      PRINTLN("Separator after 4th field not found!")
+      PRINTLN("Separator after 4th field not found!");
       return 13;
   }
 
