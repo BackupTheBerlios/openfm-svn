@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenFM 0.5\n"
 "Report-Msgid-Bugs-To: Slava Semushin <php-coder at altlinux.ru>\n"
-"POT-Creation-Date: 2006-07-17 11:22+0700\n"
-"PO-Revision-Date: 2006-07-17 11:22+0700\n"
+"POT-Creation-Date: 2006-08-03 15:25+0700\n"
+"PO-Revision-Date: 2006-08-03 15:25+0700\n"
 "Last-Translator: Slava Semushin <php-coder at altlinux.ru>\n"
 "Language-Team: OpenFM Translation Team <php-coder at altlinux.ru>\n"
 "MIME-Version: 1.0\n"
@@ -23,6 +23,12 @@ msgstr "Первым полем в строке должен быть знак '
 
 msgid "Separator for fields should be sign '|'!"
 msgstr "Разделителем для полей должен быть знак '|'!"
+
+msgid "Separator after 3rd field not found!"
+msgstr "Не найден разделитель после 3-его поля!"
+
+msgid "Separator after 4th field not found!"
+msgstr "Не найден разделитель после 4-ого поля!"
 
 msgid "Date should consist of digitals only!"
 msgstr "Дата должна состоять только из чисел!"
@@ -58,6 +64,9 @@ msgstr "-> Получение информации для файла %s\n"
 #, c-format
 msgid "File %s isn't regular file!\n"
 msgstr "Файл %s не является обычным файлом!\n"
+
+msgid "Open data file"
+msgstr "Открываю файл с данными"
 
 msgid "Lock file"
 msgstr "Блокирую файл"
@@ -137,9 +146,6 @@ msgstr ""
 #, c-format
 msgid "Failed to write to the character string\n"
 msgstr "Не удалось записать в символьную строку\n"
-
-msgid "Open data file"
-msgstr "Открываю файл с данными"
 
 msgid "Failed to open file"
 msgstr "Ошибка при открытии файла"
