@@ -143,8 +143,8 @@
  * @retval 11 date in future
  * @retval 12 3rd separator not found
  * @retval 13 4th separator not found
- * @retval 14 4th field contains not number
- * @retval 15 5th field contains not number
+ * @retval 14 3th field contains not number
+ * @retval 15 4th field contains not number
  *
  * @return 0 or digit more then 0 if one of test was failed
  **/
@@ -200,7 +200,7 @@ is_string_confirm_to_format(const char *str, unsigned long lineno)
   /* check category: should consist of digitals only */
   for (i = str+13; i < sep_cat; i++) {
     if (!isdigit(*i)) {
-        PRINTLN("Fourth field should consist of digitals only!");
+        PRINTLN("Third field should consist of digitals only!");
         return 14;
     }
   }
@@ -208,7 +208,7 @@ is_string_confirm_to_format(const char *str, unsigned long lineno)
   /* check amount: should consist of digitals or point/comma only */
   for (i = sep_cat+1; i < sep_amount; i++) {
     if ((!isdigit(*i)) && *i != '.' && *i != ',') {
-        PRINTLN("Fifth field should consist of digitals and point or comma only!");
+        PRINTLN("Fourth field should consist of digitals and point or comma only!");
         return 15;
     }
   }
@@ -291,8 +291,6 @@ is_string_confirm_to_format(const char *str, unsigned long lineno)
 
   /**
    * @todo
-   * - check fields for amount
-   * - added checks for type of cost
    * - change symbol '#' in comment to '\\0' for ignore comments (?)
    **/
 
