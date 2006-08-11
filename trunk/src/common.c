@@ -36,7 +36,7 @@
 /* for stat()
  *     fcntl()
  *     write()
- *     fdatasync()
+ *     fsync()
  *     close()
  **/
 #include <unistd.h>
@@ -414,9 +414,9 @@ add_record_to_file(const char *filename, const char *record, unsigned int verbos
   }
 
   /* flush data */
-  ret = fdatasync(fd);
+  ret = fsync(fd);
   if (ret == -1) {
-      perror("fdatasync");
+      perror("fsync");
   }
 
   if (verbose >= 2) {
