@@ -31,14 +31,17 @@
 #define COMMON_H
 
 
-/* for textdomain()
- *     gettext()
- **/
-#include <libintl.h>
+#ifdef NLS
+   /* for textdomain()
+    *     gettext()
+    **/
+   #include <libintl.h>
 
-
-/** Redefine gettext() functions to be more short. */
-#define _(str) gettext(str)
+   /** Redefine gettext() functions to be more short. */
+   #define _(str) gettext(str)
+#else /* no NLS */
+   #define _(str) str
+#endif /* NLS */
 
 
 int is_string_confirm_to_format(const char *str, unsigned long lineno);

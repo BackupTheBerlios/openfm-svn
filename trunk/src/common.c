@@ -77,10 +77,10 @@
  * rename macros for system which have him.
  **/
 #ifdef __isleap
-#define ISLEAP __isleap
+   #define ISLEAP __isleap
 #else
-#define ISLEAP(year) \
-    ((year) % 4 == 0 && ((year) % 100 != 0 || (year) % 400 == 0))
+   #define ISLEAP(year) \
+        ((year) % 4 == 0 && ((year) % 100 != 0 || (year) % 400 == 0))
 #endif
 
 /* for gettext&co stuff */

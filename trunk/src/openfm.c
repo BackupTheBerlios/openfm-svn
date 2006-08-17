@@ -73,11 +73,13 @@
 
 /** Use self-defined value if POSIX2 is not supported */
 #ifndef LINE_MAX
-#define LINE_MAX 2048
+   #define LINE_MAX 2048
 #endif
 
-/* for setlocale() */
-#include <locale.h>
+#ifdef NLS
+   /* for setlocale() */
+   #include <locale.h>
+#endif /* NLS */
 
 /* for getopt() */
 #include <unistd.h>
@@ -115,13 +117,14 @@ typedef struct {
 
 
 /* Prototypes */
-static void print_help(const char *progname);
-static void print_version(const char *progname);
 static  int parse_cmd_line(int argc, char **argv, unsigned int *verbose);
 static void analyze_arguments(int argc, char **argv, int start, settings_t *ofm);
 static char *get_path_to_datafile(unsigned int verbose);
 static void read_and_parse_datafile(const settings_t *ofm);
+
+#ifdef NLS
 static void turn_on_localization(void);
+#endif /* NLS */
 
 
 /**
@@ -153,8 +156,10 @@ main(int argc, char **argv)
  ofm.dbfile  = NULL;
 
 
+#ifdef NLS
  /* enable localizaion */
  turn_on_localization();
+#endif /* NLS */
 
  /* look at command line options */
  opt_num = parse_cmd_line(argc, argv, &ofm.verbose);
@@ -336,7 +341,7 @@ analyze_arguments(int argc, char **argv, int start, settings_t *ofm)
           }
       }
       return;
-  }
+  } /* end check for first argument */
 
   if (argc - start == 1) {
       fprintf(stderr, "%s \"%s\"\n",
@@ -397,7 +402,7 @@ analyze_arguments(int argc, char **argv, int start, settings_t *ofm)
           exit(EXIT_FAILURE);
       } /* end for action "show" */
 
-  } /* for actions */
+  } /* end for actions */
 
 
   /* when program was called as "openfm add (cost|profit|category)" */
@@ -455,7 +460,6 @@ get_path_to_datafile(unsigned int verbose)
   if (verbose >= 1)
       printf("-> %s '%s'\n", _("Your home directory is"), homedir);
 
-
   /* Allocate memory for path to file with data:
    * strlen("/home/coder" + "/" + "finance.db" + "\0")
    **/
@@ -483,8 +487,7 @@ get_path_to_datafile(unsigned int verbose)
                         "Please notify the author about this incident!\n"));
       fprintf(stderr, "snprintf: %s %d\n", _("return"), ret);
       exit(EXIT_FAILURE);
-  }
-  if (ret < 0) {
+  } else if (ret < 0) {
      fprintf(stderr, _("Failed to write to the character string\n"));
      fprintf(stderr, "snprintf: %s %d\n", _("return"), ret);
      exit(EXIT_FAILURE);
@@ -603,7 +606,7 @@ read_and_parse_datafile(const settings_t *ofm)
         plus += curr;
     }
 
-  }
+  } /* end for fgets() */
 
   /* free memory for input lines */
   free(curline);
@@ -642,6 +645,7 @@ read_and_parse_datafile(const settings_t *ofm)
  * Function just calls setlocale() and textdomain(). Those functions
  * needs for correct work gettext() functions.
  **/
+#ifdef NLS
 void
 turn_on_localization(void)
 {
@@ -662,6 +666,7 @@ turn_on_localization(void)
   }
 
 }
+#endif /* NLS */
 
 /**
  * @mainpage Open Finance Manager
