@@ -592,13 +592,13 @@ read_and_parse_datafile(const settings_t *ofm)
         continue;
     }
 
-    record_count++;
+    if (sscanf(curline, "%c|%*2u.%*2u.%*4u|%*u|%f|%*s", &sign, &curr) != 2) {
+        fprintf(stderr, "sscanf: %s\n", _("error occurs"));
+        fails++;
+        continue;
+    }
 
-    /**
-     * @todo
-     * - correctly handle return value from sscanf()
-     **/
-    (void)sscanf(curline, "%c|%*2u.%*2u.%*4u|%*u|%f|%*s", &sign, &curr);
+    record_count++;
 
     if (sign == '-') {
         minus += curr;
