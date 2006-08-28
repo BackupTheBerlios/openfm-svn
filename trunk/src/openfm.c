@@ -157,7 +157,6 @@ main(int argc, char **argv)
 
 
 #ifdef NLS
- /* enable localizaion */
  turn_on_localization();
 #endif /* NLS */
 
@@ -269,20 +268,26 @@ parse_cmd_line(int argc, char **argv, unsigned int *verbose)
 
   while ((option = getopt(argc, argv, "vVh")) != -1) {
     switch (option) {
+
       case 'v': /* enable verbose mode */
         (*verbose)++;
         break;
+
       case 'V': /* print version of program and exit */
         print_version(argv[0]);
         break;
+
       case 'h': /* print help and exit */
         print_help(argv[0]);
         break;
+
       case '?': /* for unknown options */
         exit(EXIT_FAILURE);
+
       default:  /* this case never happens */
         fprintf(stderr, "getopt: %s %c\n", _("return"), option);
         break;
+
     }
   }
 

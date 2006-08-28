@@ -44,8 +44,8 @@
 #endif /* NLS */
 
 
-int is_string_confirm_to_format(const char *str, unsigned long lineno);
-int is_file_exist_and_regular(const char *filename, unsigned int verbose);
+int  is_string_confirm_to_format(const char *str, unsigned long lineno);
+int  is_file_exist_and_regular(const char *filename, unsigned int verbose);
 void add_record_to_file(const char *filename, const char *record, unsigned int verbose);
 
 
