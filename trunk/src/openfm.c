@@ -294,8 +294,7 @@ parse_cmd_line(int argc, char **argv, unsigned int *verbose)
   if (*verbose >= 1)
       printf("-> %s %u\n", _("NOTE: Set verbose level to"), *verbose);
 
-
- return optind;
+  return optind;
 }
 
 
@@ -498,7 +497,7 @@ get_path_to_datafile(unsigned int verbose)
      exit(EXIT_FAILURE);
   }
 
- return dbfile;
+  return dbfile;
 }
 
 

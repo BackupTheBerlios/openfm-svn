@@ -294,7 +294,7 @@ is_string_confirm_to_format(const char *str, unsigned long lineno)
    * - change symbol '#' in comment to '\\0' for ignore comments (?)
    **/
 
- return 0;
+  return 0;
 }
 
 
@@ -335,7 +335,7 @@ is_file_exist_and_regular(const char *filename, unsigned int verbose)
       return 2;
   }
 
- return 0;
+  return 0;
 }
 
 
