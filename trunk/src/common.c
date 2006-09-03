@@ -354,7 +354,7 @@ void
 add_record_to_file(const char *filename, const char *record, unsigned int verbose)
 {
   int fd;       /* file descriptor retured by open() */
-  int ret;      /* for storage close(), fcntl() and fdatasync() return values */
+  int ret;      /* for storage close(), fcntl() and fsync() return values */
   ssize_t wret; /* for storage write() return value */
   struct flock lock; /* need for fcntl() function */
 
