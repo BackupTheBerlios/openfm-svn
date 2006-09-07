@@ -30,6 +30,7 @@
 #ifndef COMMON_H
 #define COMMON_H
 
+#include "config.h"
 
 #ifdef NLS
    /* for textdomain()

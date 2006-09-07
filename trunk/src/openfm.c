@@ -76,17 +76,18 @@
    #define LINE_MAX 2048
 #endif
 
+/* for getopt() */
+#include <unistd.h>
+
+
+/* Also includes config.h and other headers which needs for gettext
+ * support */
+#include "common.h"
+
 #ifdef NLS
    /* for setlocale() */
    #include <locale.h>
 #endif /* NLS */
-
-/* for getopt() */
-#include <unistd.h>
-
-/* local file */
-#include "common.h"
-#include "config.h"
 
 
 /** Name of data file */
