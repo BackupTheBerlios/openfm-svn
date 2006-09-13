@@ -1,4 +1,4 @@
-PROJECT (OpenFM)
+PROJECT (OpenFM C)
 SET (VERSION "0.5")
 
 OPTION (NLS "Enable localization support" ON)
