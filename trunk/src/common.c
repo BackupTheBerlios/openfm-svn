@@ -70,6 +70,10 @@
 #include <time.h>
 
 /**
+ * @todo:
+ * - Obviate from using __isleap macros
+ **/
+/**
  * Nonzero if YEAR is a leap year (every 4 years, except every 100th
  * isn't, and every 400th is).
  *
@@ -335,6 +339,10 @@ is_file_exist_and_regular(const char *filename, unsigned int verbose)
       return 2;
   }
 
+  /**
+   * @todo:
+   * - Function should return 1 (true) if file exist and regular
+   **/
   return 0;
 }
 
