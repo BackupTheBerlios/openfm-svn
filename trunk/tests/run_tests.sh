@@ -62,11 +62,18 @@ if [ $# -ne 1 ]; then
 fi
 
 # preparation for start
-[ -L ./openfm ] || ln -s ../src/openfm openfm
+if [ ! -L ./openfm ]; then
+   if [ ! -x ../src/openfm ]; then
+      echo "Executable openfm file not found!" >&2
+      echo "Probably you have not compile program" >&2
+      exit 2
+   fi
+   ln -s ../src/openfm openfm
+fi
 
 if [ -f finance.db ]; then
     echo "Error! File finance.db should not exist!" >&2
-    exit 2
+    exit 3
 fi
 
 #####################################################################
