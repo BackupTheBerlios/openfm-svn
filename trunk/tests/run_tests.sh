@@ -38,9 +38,9 @@ compare_files() {
   cmp -s "$ORIG" "$MODIF"
   if [ $? -eq 0 ]; then
      rm -f "$MODIF"
-     echo -e "\e[32;40mok\e[0m"
+     echo -e "\033[32;40mok\033[0m"
   else
-     echo -e "\e[31;40mfailed\e[0m"
+     echo -e "\033[31;40mfailed\033[0m"
      diff -U0 "$ORIG" "$MODIF"
   fi
 }
