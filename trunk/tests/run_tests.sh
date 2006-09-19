@@ -64,6 +64,10 @@ fi
 # preparation for start
 [ -L ./openfm ] || ln -s ../src/openfm openfm
 
+if [ -f finance.db ]; then
+    echo "Error! File finance.db should not exist!" >&2
+    exit 2
+fi
 
 #####################################################################
 #                             Start tests                           #
@@ -78,9 +82,13 @@ case $1 in
       print_message "-h option"
       ($OPENFM -h; echo rc=$?) &> "$1.txt"
       ;;
+    3)
+      print_message "absent datafile"
+      (HOME=. $OPENFM; echo rc=$?) &> "$1.txt"
+      ;;
     *)
       echo "Wrong number for test: $1" >&2
-      exit 2
+      exit 3
       ;;
 esac
 

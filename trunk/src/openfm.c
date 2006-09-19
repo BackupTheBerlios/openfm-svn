@@ -298,7 +298,6 @@ parse_cmd_line(int argc, char **argv, unsigned int *verbose)
     }
   }
 
-  /* This statement and -v option coverage by test #3 */
   if (*verbose >= 1)
       printf("-> %s %u\n", _("NOTE: Set verbose level to"), *verbose);
 
@@ -548,6 +547,7 @@ read_and_parse_datafile(const settings_t *ofm)
   /* open data file */
   fp = fopen(ofm->dbfile, "r");
   if (fp == NULL) {
+      /* This code coverage by test #3 */
       fprintf(stderr, "%s: %s\n", _("Failed to open file"), ofm->dbfile);
       perror("fopen");
       exit(EXIT_FAILURE);

@@ -1,0 +1,3 @@
+Failed to open file: ./finance.db
+fopen: No such file or directory
+rc=1
