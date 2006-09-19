@@ -83,15 +83,15 @@ fi
 case $1 in
     1)
       print_message "-V option"
-      ($OPENFM -V; echo rc=$?) &> "$1.txt"
+      ($OPENFM -V; echo rc=$?) 2>&1 >"$1.txt"
       ;;
     2)
       print_message "-h option"
-      ($OPENFM -h; echo rc=$?) &> "$1.txt"
+      ($OPENFM -h; echo rc=$?) 2>&1 >"$1.txt"
       ;;
     3)
       print_message "absent datafile"
-      (HOME=. $OPENFM; echo rc=$?) &> "$1.txt"
+      (HOME=. $OPENFM; echo rc=$?) 2>&1 >"$1.txt"
       ;;
     *)
       echo "Wrong number for test: $1" >&2
