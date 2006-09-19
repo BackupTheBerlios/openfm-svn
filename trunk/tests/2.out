@@ -1,0 +1,7 @@
+./openfm: Your private financial manager
+
+Usage: ./openfm [option]
+  -v	enable verbose mode
+  -V	print version and exit
+  -h	print this help and exit
+rc=0

@@ -11,4 +11,7 @@ ENDIF (NLS)
 CONFIGURE_FILE (
     ${CMAKE_SOURCE_DIR}/config.h.cmake
     ${CMAKE_BINARY_DIR}/config.h)
-SUBDIRS (src)
+
+ENABLE_TESTING ()
+
+SUBDIRS (src tests)

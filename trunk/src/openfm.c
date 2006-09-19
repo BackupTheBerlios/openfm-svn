@@ -274,11 +274,17 @@ parse_cmd_line(int argc, char **argv, unsigned int *verbose)
         (*verbose)++;
         break;
 
-      case 'V': /* print version of program and exit */
+      case 'V':
+        /* Print version of program and exit.
+         * This option coverage by test #1
+         **/
         print_version(argv[0]);
         break;
 
-      case 'h': /* print help and exit */
+      case 'h':
+        /* Print help and exit.
+         * This option coverage by test #2
+         **/
         print_help(argv[0]);
         break;
 
@@ -292,6 +298,7 @@ parse_cmd_line(int argc, char **argv, unsigned int *verbose)
     }
   }
 
+  /* This statement and -v option coverage by test #3 */
   if (*verbose >= 1)
       printf("-> %s %u\n", _("NOTE: Set verbose level to"), *verbose);
 

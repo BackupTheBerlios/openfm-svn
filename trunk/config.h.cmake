@@ -2,7 +2,7 @@
 #define CONFIG_H
 
 /* Version of program */
-#define VERSION ${VERSION}
+#define VERSION "${VERSION}"
 
 /* Localization support */
 #cmakedefine NLS

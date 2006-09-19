@@ -1,0 +1,88 @@
+#!/bin/sh
+#
+# This script is part of testing suite for OpenFM
+# Copyright (C) 2006 Slava Semushin <php-coder at altlinux.ru>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.  You should have received a
+# copy of the GNU General Public License along with this program; if
+# not, write to the Free Software Foundation, Inc., 51 Franklin
+# Street, Fifth Floor, Boston, MA 02110-1301, USA.
+#
+# $Id$
+#
+
+#####################################################################
+#                          Set variables                            #
+#####################################################################
+
+export LANG=C
+OPENFM="./openfm"
+
+
+#####################################################################
+#                         Define functions                          #
+#####################################################################
+
+compare_files() {
+  local ORIG="$1"
+  local MODIF="$2"
+
+  cmp -s "$ORIG" "$MODIF"
+  if [ $? -eq 0 ]; then
+     rm -f "$MODIF"
+     echo -e "\e[32;40mok\e[0m"
+  else
+     echo -e "\e[31;40mfailed\e[0m"
+     diff -U0 "$ORIG" "$MODIF"
+  fi
+}
+
+
+print_message() {
+  echo -n "Testing ${1}... "
+}
+
+
+#####################################################################
+#                           Start program                           #
+#####################################################################
+
+# check arguments
+if [ $# -ne 1 ]; then
+   echo "Usage: $0 number_of_test" >&2
+   exit 1
+fi
+
+# preparation for start
+[ -L ./openfm ] || ln -s ../src/openfm openfm
+
+
+#####################################################################
+#                             Start tests                           #
+#####################################################################
+
+case $1 in
+    1)
+      print_message "-V option"
+      ($OPENFM -V; echo rc=$?) &> "$1.txt"
+      ;;
+    2)
+      print_message "-h option"
+      ($OPENFM -h; echo rc=$?) &> "$1.txt"
+      ;;
+    *)
+      echo "Wrong number for test: $1" >&2
+      exit 2
+      ;;
+esac
+
+compare_files "$1.out" "$1.txt"
+
