@@ -576,7 +576,7 @@ read_and_parse_datafile(const settings_t *ofm)
    * - fgets() returns NULL also when error occurs. We should correct
    *   handle this situation.
    **/
-  while (fgets(curline, sizeof(curline) + 1, fp) != NULL) {
+  while (fgets(curline, LINE_MAX + 1, fp) != NULL) {
     lineno++;
 
     /* skip empty lines */
