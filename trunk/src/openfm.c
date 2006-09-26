@@ -341,7 +341,7 @@ analyze_arguments(int argc, char **argv, int start, settings_t *ofm)
   /* if unknown action then interpret this as data file */
   } else {
       /* we not set ofm->act to NONE bacause it is done in main() */
-      if (is_file_exist_and_regular(argv[start], ofm->verbose)) {
+      if (!is_file_exist_and_regular(argv[start], ofm->verbose)) {
           fprintf(stderr, "%s\n", _("Using default data file..."));
       } else {
           ofm->dbfile = strdup(argv[start]);
@@ -599,7 +599,7 @@ read_and_parse_datafile(const settings_t *ofm)
         exit(EXIT_FAILURE);
     }
 
-    if (is_string_confirm_to_format(curline, lineno)) {
+    if (!is_string_confirm_to_format(curline, lineno)) {
         fails++;
         continue;
     }

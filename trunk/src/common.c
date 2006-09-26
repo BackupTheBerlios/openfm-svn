@@ -133,24 +133,9 @@
  * @param str string which would be checked
  * @param lineno number of string, which will be printed if error
  *
- * @retval 0 successfully result
- * @retval 1 too small string
- * @retval 2 wrong first field of string
- * @retval 3 wrong separators for whole string
- * @retval 4 date consist of non digital symbols
- * @retval 5 wrong separators for date field
- * @retval 6 day of month is out of range
- * @retval 7 month is out of range
- * @retval 8 year equals to 0
- * @retval 9 day of month for leap year is out of range
- * @retval 10 day of month is out of range for that month
- * @retval 11 date in future
- * @retval 12 3rd separator not found
- * @retval 13 4th separator not found
- * @retval 14 3th field contains not number
- * @retval 15 4th field contains not number
+ * @retval 0 one of tests failed
+ * @retval 1 all tests successful
  *
- * @return 0 or digit more then 0 if one of test was failed
  **/
 int
 is_string_confirm_to_format(const char *str, unsigned long lineno)
@@ -158,7 +143,6 @@ is_string_confirm_to_format(const char *str, unsigned long lineno)
   /**
    * @todo
    * - incorporate tests 6, 10 and perhaps 9
-   * - use enum err_t for return codes
    **/
   int day;   /* day gets from string */
   int month; /* month gets from string */
@@ -174,38 +158,38 @@ is_string_confirm_to_format(const char *str, unsigned long lineno)
   /* check lenght of string */
   if (strlen(str) < 18) {
       PRINTLN("String is too small");
-      return 1;
+      return 0;
   }
 
   /* check first field */
   if (str[0] != '-' && str[0] != '+') {
       PRINTLN("First field of string should be sign '+' or '-'!");
-      return 2;
+      return 0;
   }
 
   /* check separators for fields */
   if (str[1] != '|' || str[12] != '|') {
       PRINTLN("Separator for fields should be sign '|'!");
-      return 3;
+      return 0;
   }
 
   sep_cat = strchr(str+13, '|');
   if (sep_cat == NULL) {
       PRINTLN("Separator after third field not found!");
-      return 12;
+      return 0;
   }
 
   sep_amount = strchr(sep_cat+1, '|');
   if (sep_amount == NULL) {
       PRINTLN("Separator after fourth field not found!");
-      return 13;
+      return 0;
   }
 
   /* check category: should consist of digitals only */
   for (i = str+13; i < sep_cat; i++) {
     if (!isdigit(*i)) {
         PRINTLN("Third field should consist of digitals only!");
-        return 14;
+        return 0;
     }
   }
 
@@ -213,7 +197,7 @@ is_string_confirm_to_format(const char *str, unsigned long lineno)
   for (i = sep_cat+1; i < sep_amount; i++) {
     if ((!isdigit(*i)) && *i != '.' && *i != ',') {
         PRINTLN("Fourth field should consist of digitals and point or comma only!");
-        return 15;
+        return 0;
     }
   }
 
@@ -223,27 +207,27 @@ is_string_confirm_to_format(const char *str, unsigned long lineno)
         isdigit(str[8] ) && isdigit(str[9] ) && /* check year */
         isdigit(str[10]) && isdigit(str[11]))) {
       PRINTLN("Date should consist of digitals only!");
-      return 4;
+      return 0;
   }
 
   /* check separators for date */
   if (str[4] != '.' || str[7] != '.') {
       PRINTLN("Separator for date should be sign '.'!");
-      return 5;
+      return 0;
   }
 
   /* check day */
   day = (str[2] - '0') * 10 + (str[3] - '0');
   if (day > 31 || day == 0) {
       PRINTLN1("Invalid number of day", day);
-      return 6;
+      return 0;
   }
 
   /* check month */
   month = (str[5] - '0') * 10 + (str[6] - '0');
   if (month > 12 || month == 0) {
       PRINTLN1("Invalid number of month", month);
-      return 7;
+      return 0;
   }
 
   /* check year */
@@ -254,7 +238,7 @@ is_string_confirm_to_format(const char *str, unsigned long lineno)
 
   if (year == 0) {
       PRINTLN("Invalid number of year! Year should be more then 0");
-      return 8;
+      return 0;
    }
 
   /* check day of months */
@@ -262,13 +246,13 @@ is_string_confirm_to_format(const char *str, unsigned long lineno)
       /* if it is leap year */
       if (ISLEAP(year) && day > 29) {
           PRINTLN2("Invalid day of month in leap year", day, month);
-          return 9;
+          return 0;
       }
 
       /* other months */
       if ((month == 4 || month == 6 || month == 9 || month == 11) && day > 30) {
           PRINTLN2("Invalid day of month", day, month);
-          return 10;
+          return 0;
       }
   }
 
@@ -288,7 +272,7 @@ is_string_confirm_to_format(const char *str, unsigned long lineno)
           month == local_time->tm_mon + 1 &&
           day > local_time->tm_mday)) {
           PRINTLN3("Date in future", day, month, year);
-          return 11;
+          return 0;
       }
     } /* localtime */
   } /* time */
@@ -298,24 +282,22 @@ is_string_confirm_to_format(const char *str, unsigned long lineno)
    * - change symbol '#' in comment to '\\0' for ignore comments (?)
    **/
 
-  return 0;
+  return 1;
 }
 
 
 /**
  * Examinate file: he should exist and be regular.
  *
- * Function tries to get statistics about file and determine that it is a
+ * Function tries to get statistics about file and determine is that a
  * regular file. Used for verify user-defined filename.
  *
  * @param filename name of file
  * @param verbose level of verbose
  *
- * @retval 0 file exists and is regular
- * @retval 1 stat(2) returns error. The file may not exist
- * @retval 2 file is not regular
+ * @retval 0 stat(2) returns error or file is not regular
+ * @retval 1 file exists and is regular
  *
- * @return 0 or digit more then 0 if file doesn't exist or is not regular
  **/
 int
 is_file_exist_and_regular(const char *filename, unsigned int verbose)
@@ -330,20 +312,16 @@ is_file_exist_and_regular(const char *filename, unsigned int verbose)
   ret = stat(filename, &file_info);
   if (ret == -1) {
       perror("stat");
-      return 1;
+      return 0;
    }
 
   /* check if file is regular */
   if (!S_ISREG(file_info.st_mode)) {
       fprintf(stderr, _("File %s isn't regular file!\n"), filename);
-      return 2;
+      return 0;
   }
 
-  /**
-   * @todo:
-   * - Function should return 1 (true) if file exist and regular
-   **/
-  return 0;
+  return 1;
 }
 
 
