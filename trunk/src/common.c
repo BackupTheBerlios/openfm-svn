@@ -41,10 +41,13 @@
  **/
 #include <unistd.h>
 
+#if 0
+/* for add_record_to_file() */
 /* for open()
  *     fcntl()
  **/
 #include <fcntl.h>
+#endif /* 0 */
 
 /* for isdigit() */
 #include <ctype.h>
@@ -325,6 +328,8 @@ is_file_exist_and_regular(const char *filename, unsigned int verbose)
 }
 
 
+#if 0
+/* This function not used now, but will be used later */
 /**
  * Open file and add record.
  *
@@ -417,4 +422,5 @@ add_record_to_file(const char *filename, const char *record, unsigned int verbos
   }
 
 }
+#endif /* 0 */
 
