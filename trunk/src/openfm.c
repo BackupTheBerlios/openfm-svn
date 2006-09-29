@@ -35,7 +35,9 @@
 /* for getpwuid() */
 #include <pwd.h>
 
-/* for getuid() */
+/* for getuid()
+ *     getopt()
+ **/
 #include <unistd.h>
 
 /* for errno variable */
@@ -75,10 +77,6 @@
 #ifndef LINE_MAX
    #define LINE_MAX 2048
 #endif
-
-/* for getopt() */
-#include <unistd.h>
-
 
 /* Also includes config.h and other headers which needs for gettext
  * support */
