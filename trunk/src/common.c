@@ -268,10 +268,11 @@ is_string_confirm_to_format(const char *str, unsigned long lineno)
     if (local_time == NULL) {
         fprintf(stderr, "localtime: %s\n", _("error occurs"));
     } else {
-      if (year  > local_time->tm_year + 1900 || /* year more */
-         (year == local_time->tm_year + 1900 && /* month more */
+      local_time->tm_year += 1900; /* because years since 1900 */
+      if (year  > local_time->tm_year || /* year more */
+         (year == local_time->tm_year && /* month more */
           month > local_time->tm_mon + 1) ||
-         (year == local_time->tm_year + 1900 && /* day more */
+         (year == local_time->tm_year && /* day more */
           month == local_time->tm_mon + 1 &&
           day > local_time->tm_mday)) {
           PRINTLN3("Date in future", day, month, year);
