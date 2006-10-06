@@ -127,6 +127,46 @@ static void turn_on_localization(void);
 
 
 /**
+ * Prepare to work.
+ *
+ * Function do all preparations for work with data. This includes
+ * setup localization, set default values for base variables and parse
+ * command line arguments and options.
+ *
+ * @param ofm  struct with program settings
+ * @param argc program arguments counter
+ * @param argv list of program arguments
+ **/
+void
+prepare(settings_t *ofm, int argc, char **argv)
+{
+  /* temporary variable. Used only as routine between parse_cmd_line()
+   * and analyze_arguments()
+   **/
+  int opt_num;
+
+
+#ifdef NLS
+  turn_on_localization();
+#endif /* NLS */
+
+  /* look at command line options */
+  opt_num = parse_cmd_line(argc, argv, &ofm->verbose);
+
+  /* parse another arguments if they exists */
+  if (opt_num < argc) {
+      analyze_arguments(argc, argv, opt_num, ofm);
+  }
+
+  /* if user does not give data file */
+  if (ofm->dbfile == NULL) {
+      ofm->dbfile = get_path_to_datafile(ofm->verbose);
+  }
+
+}
+
+
+/**
  * Main function.
  *
  * Function is a mother of all another functions. Program starts from
@@ -141,12 +181,6 @@ static void turn_on_localization(void);
 int
 main(int argc, char **argv)
 {
- /* temporary variable. Used only as routine between parse_cmd_line()
-  * and analyze_arguments()
-  **/
- int opt_num;
-
-
  /* program settings which will get from command line */
  settings_t ofm;
 
@@ -154,24 +188,7 @@ main(int argc, char **argv)
  ofm.verbose = 0;    /* no verbose by default */
  ofm.dbfile  = NULL;
 
-
-#ifdef NLS
- turn_on_localization();
-#endif /* NLS */
-
- /* look at command line options */
- opt_num = parse_cmd_line(argc, argv, &ofm.verbose);
-
- /* parse another arguments if they exists */
- if (opt_num < argc) {
-     analyze_arguments(argc, argv, opt_num, &ofm);
- }
-
- /* if user does not give data file */
- if (ofm.dbfile == NULL) {
-     ofm.dbfile = get_path_to_datafile(ofm.verbose);
- }
-
+ prepare(&ofm, argc, argv);
 
  switch (ofm.act) {
      case NONE:
