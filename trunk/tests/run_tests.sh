@@ -91,7 +91,7 @@ case $1 in
       ;;
     3)
       print_message "absent datafile"
-      (HOME=. $OPENFM; echo rc=$?) 2>&1 >"$1.txt"
+      (HOME=. $OPENFM 2>&1; echo rc=$?) >"$1.txt"
       ;;
     *)
       echo "Wrong number for test: $1" >&2
