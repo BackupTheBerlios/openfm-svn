@@ -1,2 +1,2 @@
 bin_PROGRAMS = openfm
-openfm_SOURCES = openfm.c common.c
+openfm_SOURCES = openfm.c common.c common.h
