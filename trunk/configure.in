@@ -3,6 +3,7 @@ dnl Process this file with autoconf to produce a configure script.
 AC_PREREQ(2.59)
 AC_INIT([OpenFM],[0.5],[php-coder at altlinux.ru],[openfm])
 AC_CONFIG_SRCDIR([src/openfm.c])
+AC_CONFIG_HEADERS([config.h])
 AM_INIT_AUTOMAKE
 
 # Determine a C compiler to use. If CC is not already set in the
