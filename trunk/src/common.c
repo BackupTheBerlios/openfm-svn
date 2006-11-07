@@ -58,8 +58,11 @@
  **/
 #include <stdio.h>
 
+#if 0
+/* for add_record_to_file() */
 /* for exit() */
 #include <stdlib.h>
+#endif /* 0 */
 
 /* for strlen()
  *     strchr()
