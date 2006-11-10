@@ -32,6 +32,9 @@
  **/
 #include <sys/types.h>
 
+/* for assert() */
+#include <assert.h>
+
 /* for getpwuid() */
 #include <pwd.h>
 
@@ -117,7 +120,7 @@ typedef struct {
 
 /* Prototypes */
 static  int parse_cmd_line(int argc, char **argv, unsigned int *verbose);
-static void analyze_arguments(int argc, char **argv, int start, settings_t *ofm);
+static void analyze_arguments(settings_t *ofm, int argc, char **argv, int start);
 static char *get_path_to_datafile(unsigned int verbose);
 static void read_and_parse_datafile(const settings_t *ofm);
 
@@ -145,6 +148,9 @@ prepare(settings_t *ofm, int argc, char **argv)
    **/
   int opt_num;
 
+  assert(ofm != NULL);
+  assert(argc > 0);
+  assert(argv != NULL);
 
 #ifdef NLS
   turn_on_localization();
@@ -153,9 +159,11 @@ prepare(settings_t *ofm, int argc, char **argv)
   /* look at command line options */
   opt_num = parse_cmd_line(argc, argv, &ofm->verbose);
 
+  assert(opt_num > 0);
+
   /* parse another arguments if they exists */
   if (opt_num < argc) {
-      analyze_arguments(argc, argv, opt_num, ofm);
+      analyze_arguments(ofm, argc, argv, opt_num);
   }
 
   /* if user does not give data file */
@@ -232,6 +240,8 @@ main(int argc, char **argv)
 static void
 print_help(const char *progname)
 {
+  assert(progname != NULL);
+
   printf(_("%s: Your private financial manager\n\n"
          "Usage: %s [option]\n"
          "  -v\tenable verbose mode\n"
@@ -257,6 +267,8 @@ print_help(const char *progname)
 static void
 print_version(const char *progname)
 {
+  assert(progname != NULL);
+
   printf("%s: %s %s\n"
          "Copyright (C) 2006 Slava Semushin <php-coder at altlinux.ru>\n",
          progname, _("version"), VERSION);
@@ -281,6 +293,9 @@ static int
 parse_cmd_line(int argc, char **argv, unsigned int *verbose)
 {
   int option;
+
+  assert(argc > 0);
+  assert(argv != NULL);
 
   while ((option = getopt(argc, argv, "vVh")) != -1) {
     switch (option) {
@@ -337,14 +352,20 @@ parse_cmd_line(int argc, char **argv, unsigned int *verbose)
  * @warning If dbfile was change (not NULL after) then don't forget to free
  * memory with free() function.
  *
+ * @param ofm struct with program settings
  * @param argc program arguments counter
  * @param argv list of arguments of program
  * @param start number of first non-option element in argv
- * @param ofm struct with program settings
  **/
 static void
-analyze_arguments(int argc, char **argv, int start, settings_t *ofm)
+analyze_arguments(settings_t *ofm, int argc, char **argv, int start)
 {
+
+  assert(ofm != NULL);
+  assert(argc > 0);
+  assert(argv != NULL);
+  assert(start > 0);
+
   /* if action "add" was chosen */
   if (strcmp(argv[start], "add") == 0) {
       ofm->act = ADD;
@@ -555,6 +576,8 @@ read_and_parse_datafile(const settings_t *ofm)
 
   /* counter for wrong lines in file */
   int fails;
+
+  assert(ofm != NULL);
 
   if (ofm->verbose >= 1)
       printf("-> %s (%s)\n", _("Open data file"), ofm->dbfile);

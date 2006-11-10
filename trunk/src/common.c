@@ -33,6 +33,9 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+/* for assert() */
+#include <assert.h>
+
 /* for stat()
  *     fcntl()
  *     write()
@@ -160,6 +163,8 @@ is_string_confirm_to_format(const char *str, unsigned long lineno)
   char *sep_cat;    /* point to separator after 3rd field */
   char *sep_amount; /* point to separator after 4th field */
   const char *i;
+
+  assert(str != NULL);
 
   /* check lenght of string */
   if (strlen(str) < 18) {
@@ -312,6 +317,8 @@ is_file_exist_and_regular(const char *filename, unsigned int verbose)
   struct stat file_info;
   int ret;
 
+  assert(filename != NULL);
+
   if (verbose >= 1)
       printf(_("-> Trying to get statistics for %s file\n"), filename);
 
@@ -353,6 +360,9 @@ add_record_to_file(const char *filename, const char *record, unsigned int verbos
   ssize_t wret; /* for storage write() return value */
   struct flock lock; /* need for fcntl() function */
 
+  assert(filename != NULL);
+  assert(record != NULL);
+
   if (verbose >= 1) {
       printf("-> %s (%s)\n", _("Open data file"), filename);
   }
@@ -385,6 +395,9 @@ add_record_to_file(const char *filename, const char *record, unsigned int verbos
   }
 
   /* write data */
+  /* @todo:
+   * - strlen() can return NULL
+   **/
   wret = write(fd, record, strlen(record)*sizeof(char));
   if (wret == -1) {
       perror("write");
