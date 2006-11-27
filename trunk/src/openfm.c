@@ -243,7 +243,7 @@ print_help(const char *progname)
   assert(progname != NULL);
 
   printf(_("%s: Your private financial manager\n\n"
-         "Usage: %s [option]\n"
+         "Usage: %s [option] [file]\n"
          "  -v\tenable verbose mode\n"
          "  -V\tprint version and exit\n"
          "  -h\tprint this help and exit\n"),
