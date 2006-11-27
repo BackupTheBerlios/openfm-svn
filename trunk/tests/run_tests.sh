@@ -93,6 +93,10 @@ case $1 in
       print_message "absent datafile"
       (HOME=. $OPENFM 2>&1; echo rc=$?) >"$1.txt"
       ;;
+    4)
+      print_message "empty datafile"
+      ($OPENFM "$1.in"; echo rc=$?) >"$1.txt"
+      ;;
     *)
       echo "Wrong number for test: $1" >&2
       exit 3
