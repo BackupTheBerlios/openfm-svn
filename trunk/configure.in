@@ -25,5 +25,5 @@ if test "x$enable_nls" = "xyes"; then
    AC_DEFINE([NLS], [], [Localization support])
 fi
 
-AC_CONFIG_FILES(Makefile src/Makefile)
+AC_CONFIG_FILES(Makefile src/Makefile tests/Makefile)
 AC_OUTPUT
