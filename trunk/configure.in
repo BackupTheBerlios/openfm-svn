@@ -4,7 +4,7 @@ AC_PREREQ(2.59)
 AC_INIT([OpenFM],[0.5],[php-coder at altlinux.ru],[openfm])
 AC_CONFIG_SRCDIR([src/openfm.c])
 AC_CONFIG_HEADERS([config.h])
-AM_INIT_AUTOMAKE
+AM_INIT_AUTOMAKE([dist-bzip2])
 
 # Determine a C compiler to use. If CC is not already set in the
 # environment, check for gcc and cc, then for other C compilers. Set
