@@ -136,7 +136,7 @@ static void turn_on_localization(void);
  * setup localization, set default values for base variables and parse
  * command line arguments and options.
  *
- * @param ofm  struct with program settings
+ * @param ofm struct with program settings
  * @param argc program arguments counter
  * @param argv list of program arguments
  **/
@@ -257,8 +257,8 @@ print_help(const char *progname)
  * Print version of program and copyright.
  *
  * Function prints version and copyright. Get name of program via first
- * argument (usually it is argv[0]) and version from \ref VERSION
- * macros.
+ * argument (usually it is argv[0]) and version from VERSION macros
+ * (which comes from config.h).
  *
  * @param progname name of program
  *
@@ -284,7 +284,7 @@ print_version(const char *progname)
  * then function would quit from program with failure exit code.
  *
  * @param argc program arguments counter
- * @param argv list of arguments of program
+ * @param argv list of program arguments
  * @param verbose level of verbose
  *
  * @return number of first non-option element in argv
@@ -305,16 +305,12 @@ parse_cmd_line(int argc, char **argv, unsigned int *verbose)
         break;
 
       case 'V':
-        /* Print version of program and exit.
-         * This option coverage by test #1
-         **/
+        /* Print version of program and exit */
         print_version(argv[0]);
         break;
 
       case 'h':
-        /* Print help and exit.
-         * This option coverage by test #2
-         **/
+        /* Print help and exit */
         print_help(argv[0]);
         break;
 
@@ -354,7 +350,7 @@ parse_cmd_line(int argc, char **argv, unsigned int *verbose)
  *
  * @param ofm struct with program settings
  * @param argc program arguments counter
- * @param argv list of arguments of program
+ * @param argv list of program arguments
  * @param start number of first non-option element in argv
  **/
 static void
@@ -585,7 +581,6 @@ read_and_parse_datafile(const settings_t *ofm)
   /* open data file */
   fp = fopen(ofm->dbfile, "r");
   if (fp == NULL) {
-      /* This code coverage by test #3 */
       fprintf(stderr, "%s: %s\n", _("Failed to open file"), ofm->dbfile);
       perror("fopen");
       exit(EXIT_FAILURE);
