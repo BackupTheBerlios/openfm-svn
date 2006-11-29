@@ -110,19 +110,19 @@ typedef enum {COST, PROFIT, CATEGORY, BALANCE, FULLSTAT} arguments;
  * Contains program settings which will initial in \ref
  * analyze_arguments() function.
  **/
-typedef struct {
+struct settings {
   actions      act;     /**< see description for \ref actions */
   arguments    arg;     /**< see description for \ref arguments */
   char        *dbfile;  /**< full path to data file */
   unsigned int verbose; /**< level of verbose */
-} settings_t;
+};
 
 
 /* Prototypes */
 static  int parse_cmd_line(int argc, char **argv, unsigned int *verbose);
-static void analyze_arguments(settings_t *ofm, int argc, char **argv, int start);
+static void analyze_arguments(struct settings *ofm, int argc, char **argv, int start);
 static char *get_path_to_datafile(unsigned int verbose);
-static void read_and_parse_datafile(const settings_t *ofm);
+static void read_and_parse_datafile(const struct settings *ofm);
 
 #ifdef NLS
 static void turn_on_localization(void);
@@ -141,7 +141,7 @@ static void turn_on_localization(void);
  * @param argv list of program arguments
  **/
 static void
-prepare(settings_t *ofm, int argc, char **argv)
+prepare(struct settings *ofm, int argc, char **argv)
 {
   /* temporary variable. Used only as routine between parse_cmd_line()
    * and analyze_arguments()
@@ -190,7 +190,7 @@ int
 main(int argc, char **argv)
 {
  /* program settings which will get from command line */
- settings_t ofm;
+ struct settings ofm;
 
  ofm.act     = NONE; /* no actions should be perform by default */
  ofm.verbose = 0;    /* no verbose by default */
@@ -354,7 +354,7 @@ parse_cmd_line(int argc, char **argv, unsigned int *verbose)
  * @param start number of first non-option element in argv
  **/
 static void
-analyze_arguments(settings_t *ofm, int argc, char **argv, int start)
+analyze_arguments(struct settings *ofm, int argc, char **argv, int start)
 {
 
   assert(ofm != NULL);
@@ -550,7 +550,7 @@ get_path_to_datafile(unsigned int verbose)
  * @param ofm struct with program settings
  **/
 static void
-read_and_parse_datafile(const settings_t *ofm)
+read_and_parse_datafile(const struct settings *ofm)
 {
   FILE *fp;
   int   ret; /* for storage fclose() return value */
