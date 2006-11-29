@@ -97,6 +97,34 @@ case $1 in
       print_message "empty datafile"
       ($OPENFM "$1.in"; echo rc=$?) >"$1.txt"
       ;;
+    5)
+      print_message "'openfm show' command"
+      ($OPENFM show 2>&1; echo rc=$?) >"$1.txt"
+      ;;
+    6)
+      print_message "'openfm add' command"
+      ($OPENFM add 2>&1; echo rc=$?) >"$1.txt"
+      ;;
+    7)
+      print_message "'openfm add qwerty12345' command"
+      ($OPENFM add qwerty12345 2>&1; echo rc=$?) >"$1.txt"
+      ;;
+    8)
+      print_message "'openfm show qwerty12345' command"
+      ($OPENFM show qwerty12345 2>&1; echo rc=$?) >"$1.txt"
+      ;;
+    9)
+      print_message "'openfm add cost' command"
+      ($OPENFM add cost 2>&1; echo rc=$?) >"$1.txt"
+      ;;
+    10)
+      print_message "'openfm add profit' command"
+      ($OPENFM add profit 2>&1; echo rc=$?) >"$1.txt"
+      ;;
+    11)
+      print_message "'openfm add category' command"
+      ($OPENFM add category 2>&1; echo rc=$?) >"$1.txt"
+      ;;
     *)
       echo "Wrong number for test: $1" >&2
       exit 3
