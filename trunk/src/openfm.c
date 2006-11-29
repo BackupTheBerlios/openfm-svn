@@ -324,8 +324,9 @@ parse_cmd_line(int argc, char **argv, unsigned int *verbose)
     }
   }
 
-  if (*verbose >= 1)
+  if (*verbose >= 1) {
       printf("-> %s %u\n", _("NOTE: Set verbose level to"), *verbose);
+  }
 
   return optind;
 }
@@ -500,8 +501,9 @@ get_path_to_datafile(unsigned int verbose)
       homedir = user->pw_dir;
   }
 
-  if (verbose >= 1)
+  if (verbose >= 1) {
       printf("-> %s '%s'\n", _("Your home directory is"), homedir);
+  }
 
   /* Allocate memory for path to file with data:
    * strlen("/home/coder" + "/" + "finance.db" + "\0")
@@ -575,8 +577,9 @@ read_and_parse_datafile(const struct settings *ofm)
 
   assert(ofm != NULL);
 
-  if (ofm->verbose >= 1)
+  if (ofm->verbose >= 1) {
       printf("-> %s (%s)\n", _("Open data file"), ofm->dbfile);
+  }
 
   /* open data file */
   fp = fopen(ofm->dbfile, "r");
@@ -589,8 +592,9 @@ read_and_parse_datafile(const struct settings *ofm)
   /* free memory for path to data file */
   free(ofm->dbfile);
 
-  if (ofm->verbose >= 1)
+  if (ofm->verbose >= 1) {
       printf("-> %s\n", _("Reading data..."));
+  }
 
   curline = calloc(LINE_MAX + 1, sizeof(char));
   if (curline == NULL) {

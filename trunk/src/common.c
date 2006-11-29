@@ -319,8 +319,9 @@ is_file_exist_and_regular(const char *filename, unsigned int verbose)
 
   assert(filename != NULL);
 
-  if (verbose >= 1)
+  if (verbose >= 1) {
       printf(_("-> Trying to get statistics for %s file\n"), filename);
+  }
 
   /* get statistics about file */
   ret = stat(filename, &file_info);
