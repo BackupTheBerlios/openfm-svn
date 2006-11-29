@@ -140,7 +140,7 @@ static void turn_on_localization(void);
  * @param argc program arguments counter
  * @param argv list of program arguments
  **/
-void
+static void
 prepare(settings_t *ofm, int argc, char **argv)
 {
   /* temporary variable. Used only as routine between parse_cmd_line()
