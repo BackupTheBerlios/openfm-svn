@@ -4,6 +4,6 @@ set -x
 
 aclocal && \
 autoheader -Wall && \
-automake -Wall --foreign --add-missing && \
+automake -Wall -Wno-portability --foreign --add-missing && \
 autoconf -Wall
 

@@ -38,5 +38,5 @@ if test "x$enable_werror" = "xyes"; then
    CFLAGS="$CFLAGS -Werror"
 fi
 
-AC_CONFIG_FILES(Makefile src/Makefile tests/Makefile)
+AC_CONFIG_FILES(Makefile src/Makefile tests/Makefile po/Makefile)
 AC_OUTPUT
