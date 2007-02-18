@@ -682,7 +682,6 @@ read_and_parse_datafile(const struct settings *ofm)
   ret = fclose(fp);
   if (ret != 0) {
      perror("fclose");
-     exit(EXIT_FAILURE);
   }
 
 }
